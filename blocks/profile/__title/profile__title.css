@@ -12,11 +12,9 @@
 @media screen and (max-width: 1024px) {
   .profile__title {
     font-size: 27px;
-    line-height: 33px;
     text-align: center;
     min-width: 189px;
     height: 26px;
-    font-size: 27px;
     line-height: 33px;
     transform: translateX(9.9%);
   }
