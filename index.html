@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <link rel="stylesheet" href="pages/index.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mesto</title>
+</head>
+
+<body class="page">
+  <header class="header">
+    <img class="header__logo" src="images/Vector.png" alt="Место">
+    <div class="header__line"></div>
+  </header>
+  <section class="profile">
+    <div class="profile__avatar">
+      <img class="profile__image" src="images/avatar-image.jpg" alt="Жак-Ив">
+    </div>
+    <div class="profile__info">
+      <h1 class="profile__title" id="profile__title">Жак-Ив Кусто</h1>
+      <button class="profile__edit-button" id="profile__edit-button"></button>
+      <p class="profile__text" id="profile__text">Исследователь океана</p>
+    </div>
+    <button class="profile__add-button"></button>
+  </section>
+  <section class="elements">
+    <div class="element">
+      <img class="element__image" src="images/Karajevsk.jpg" alt="Карачаевск">
+      <div class="element__footer">
+        <p class="element__title">Карачаевск</p>
+        <button class="element__like-button"></button>
+      </div>
+    </div>
+    <div class="element">
+      <img class="element__image" src="images/Elbrus.png" alt="Эльбрус">
+      <div class="element__footer">
+        <p class="element__title">Гора Эльбрус</p>
+        <button class="element__like-button"></button>
+      </div>
+    </div>
+    <div class="element">
+      <img class="element__image" src="images/Dombai.png" alt="Домбай">
+      <div class="element__footer">
+        <p class="element__title">Домбай</p>
+        <button class="element__like-button"></button>
+      </div>
+    </div>
+    <div class="element">
+      <img class="element__image" src="images/Elbrus.png" alt="Эльбрус">
+      <div class="element__footer">
+        <p class="element__title">Гора Эльбрус</p>
+        <button class="element__like-button"></button>
+      </div>
+    </div>
+    <div class="element">
+      <img class="element__image" src="images/Dombai.png" alt="Домбай">
+      <div class="element__footer">
+        <p class="element__title">Домбай</p>
+        <button class="element__like-button"></button>
+      </div>
+    </div>
+    <div class="element">
+      <img class="element__image" src="images/Karajevsk.jpg" alt="Карачаевск">
+      <div class="element__footer">
+        <p class="element__title">Карачаево-Черкессия</p>
+        <button class="element__like-button"></button>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    <p class="footer__text">© 2022 Mesto Russia</p>
+  </footer>
+
+  <div class="edit-form" id="edit-form">
+    <div class="edit-form__overlay"></div>
+    <div class="edit-form__container">
+      <form class="edit-form__form">
+        <img class="edit-form__close-icon" id="edit-form__close-icon" src="images/close-icon.png">
+        <p class="edit-form__title">Редактировать профиль</p>
+        <input class="edit-form__field-one" id="edit-form__field-one" type="text" value="Жак-Ив Кусто">
+        <line class="edit-form__line"></line>
+        <input class="edit-form__field-two" id="edit-form__field-two" type="text" value="Исследователь океана">
+        <line class="edit-form__line"></line>
+        <line></line>
+        <button class="edit-form__submit-btn" id="edit-form__submit-btn" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>
+<script src="./script.js"></script>
