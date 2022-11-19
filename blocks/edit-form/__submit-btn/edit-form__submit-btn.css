@@ -11,6 +11,11 @@
   color: #FFFFFF;
   padding-top: 14px;
   padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.edit-form__submit-btn:hover {
+  opacity:0.8;
 }
 
 @media screen and (max-width: 1024px) {

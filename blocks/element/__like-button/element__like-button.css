@@ -5,4 +5,13 @@
   background-position: center;
   width: 22px;
   height: 19px;
+  cursor: pointer;
+}
+
+.element__like-button:hover {
+  opacity: 0.5;
+}
+
+.element__like-button .element__like-button_active {
+  background: url(../../../images/like_black.svg);
 }
