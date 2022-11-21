@@ -1,6 +1,5 @@
 .profile__title {
   min-width:294px;
-  height:39px;
   font-family: "Inter", "Arial ", sans-serif;
   font-style:normal;
   font-weight:500;
@@ -14,7 +13,6 @@
     font-size:27px;
     text-align:center;
     min-width:189px;
-    height:26px;
     line-height:33px;
     transform:translateX(9.9%);
   }

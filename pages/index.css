@@ -16,12 +16,12 @@
 @import url(../blocks/element/__footer/element__footer.css);
 @import url(../blocks/element/__image/element__image.css);
 @import url(../blocks/element/__like-button/element__like-button.css);
+@import url(../blocks/element/_like-button_active/element__like-button_active.css);
 @import url(../blocks/element/__title/element__title.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/footer/__text/footer__text.css);
 @import url(../blocks/footer/footer.css);
-
 @import url(../blocks/edit-form/edit-form.css);
 @import url(../blocks/edit-form/__overlay/edit-form__overlay.css);
 @import url(../blocks/edit-form/__field-one/edit-form__field-one.css);

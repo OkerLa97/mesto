@@ -9,6 +9,8 @@
   min-width:430px;
   margin:195px auto auto auto;
   box-sizing:border-box;
+
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
 }
 
 @media screen and (max-width:1024px) {
