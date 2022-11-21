@@ -1,20 +1,21 @@
 .profile__edit-button {
-  width: 24px;
-  height: 24px;
-  background: url(../../../images/Edit_Button.svg);
-  border: 0;
-  cursor: pointer;
+  width:24px;
+  height:24px;
+  background:url(../../../images/Edit_Button.svg);
+  border:0;
+  cursor:pointer;
+  transition:all 0.5s;
 }
 
 .profile__edit-button:hover {
-  opacity: 0.6;
+  opacity:0.6;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width:1024px) {
   .profile__edit-button {
-    transform: translateX(8px);
-    width: 18px;
-    height: 18px;
-    background-size: 18px 18px;
+    transform:translateX(8px);
+    width:18px;
+    height:18px;
+    background-size:18px 18px;
   }
 }

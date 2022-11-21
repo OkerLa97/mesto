@@ -1,27 +1,28 @@
 .edit-form__submit-btn {
-  margin-top: 48px;
-  background-color: #000000;
-  border-radius: 2px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-  text-align: center;
-  color: #FFFFFF;
-  padding-top: 14px;
-  padding-bottom: 10px;
-  cursor: pointer;
+  margin-top:48px;
+  background-color:#000000;
+  border-radius:2px;
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400;
+  font-size:18px;
+  line-height:22px;
+  text-align:center;
+  color:#FFFFFF;
+  padding-top:14px;
+  padding-bottom:10px;
+  cursor:pointer;
+  transition:all 0.5s;
 }
 
 .edit-form__submit-btn:hover {
   opacity:0.8;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width:1024px) {
   .edit-form__submit-btn {
-    font-size: 14px;
-    line-height: 17px;
-    margin-top: 43px;
+    font-size:14px;
+    line-height:17px;
+    margin-top:43px;
   }
 }

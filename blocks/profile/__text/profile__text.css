@@ -1,21 +1,21 @@
 .profile__text {
-  width: 336px;
-  height: 18px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-  margin: 16px 0 0 0;
-  color: #FFFFFF;
+  width:336px;
+  height:18px;
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400;
+  font-size:18px;
+  line-height:22px;
+  margin:16px 0 0 0;
+  color:#FFFFFF;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width:1024px) {
   .profile__text {
-    width: 282px;
-    height: 14px;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: center;
+    width:282px;
+    height:14px;
+    font-size:14px;
+    line-height:17px;
+    text-align:center;
   }
 }

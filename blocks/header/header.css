@@ -1,13 +1,13 @@
 .header {
-  max-width: 880px;
-  margin: 45px auto 0 auto;
-  display: flex;
-  flex-direction: column;
+  max-width:880px;
+  margin:45px auto 0 auto;
+  display:flex;
+  flex-direction:column;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width:1024px) {
   .header {
-    width: 100%;
-    margin: 28px auto 0 auto;
+    width:100%;
+    margin:28px auto 0 auto;
   }
 }

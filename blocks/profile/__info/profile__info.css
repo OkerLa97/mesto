@@ -1,17 +1,17 @@
 .profile__info {
-  color: #FFFFFF;
-  max-width: 336px;
-  flex-wrap: wrap;
-  display: flex;
-  align-items: flex-end;
-  margin: 22px 0 25px 0;
+  color:#FFFFFF;
+  max-width:336px;
+  flex-wrap:wrap;
+  display:flex;
+  align-items:flex-end;
+  margin:22px 0 25px 0;
   
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width:1024px) {
   .profile__info {
-    max-width: 282px;
-    margin: 22.25px auto 0 auto;
-    justify-content: center;
+    max-width:282px;
+    margin:22.25px auto 0 auto;
+    justify-content:center;
   }
 }
