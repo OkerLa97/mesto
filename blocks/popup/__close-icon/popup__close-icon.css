@@ -6,8 +6,8 @@
   top:-40px;
   cursor:pointer;
   transition:all 0.5s;
-  background-image: url(../../../images/close_icon.svg);
-  background-size: 32px;
+  background-image:url(../../../images/close_icon.svg);
+  background-size:32px;
   background-color:#000000;
   background-repeat:no-repeat;
   background-position:center;
