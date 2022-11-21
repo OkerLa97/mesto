@@ -3,11 +3,21 @@
   margin:45px auto 0 auto;
   display:flex;
   flex-direction:column;
+
+  border-bottom:1px solid #545454;
+  padding-bottom:41px;
 }
 
 @media screen and (max-width:1024px) {
   .header {
+    width: calc(100% - 19px * 2);
+  }
+}
+
+@media screen and (max-width:768px) {
+  .header {
     width:100%;
     margin:28px auto 0 auto;
+    padding-bottom:31.6px;
   }
 }

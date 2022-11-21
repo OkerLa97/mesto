@@ -9,6 +9,12 @@
 @media screen and (max-width:1024px) {
   .elements {
     width:calc(100% - 19px * 2);
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media screen and (max-width:768px) {
+  .elements {
     grid-template-columns:1fr;
     margin-top:36px;
   }

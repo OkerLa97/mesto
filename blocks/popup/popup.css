@@ -1,4 +1,4 @@
-.edit-form {
+.popup {
   position:absolute;
   top:0;
   left:0;
@@ -8,6 +8,6 @@
   display:none;
 }
 
-.edit-form.open_end {
+.popup_open {
   display:block;
 }

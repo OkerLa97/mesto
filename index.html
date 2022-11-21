@@ -13,83 +13,80 @@
 <body class="page">
   <header class="header">
     <img class="header__logo" src="images/logo.svg" alt="Место">
-    <div class="header__line"></div>
   </header>
-  <section class="profile">
-    <div class="profile__avatar">
+  <main>
+    <section class="profile">
       <img class="profile__image" src="images/avatar-image.jpg" alt="Жак-Ив">
-    </div>
-    <div class="profile__info">
-      <h1 class="profile__title" id="profile__title">Жак-Ив Кусто</h1>
-      <button class="profile__edit-button" id="profile__edit-button"></button>
-      <p class="profile__text" id="profile__text">Исследователь океана</p>
-    </div>
-    <button class="profile__add-button"></button>
-  </section>
-  <section class="elements">
-    <div class="element">
-      <img class="element__image" src="images/Karajevsk.jpg" alt="Карачаевск">
-      <div class="element__footer">
-        <h2 class="element__title">Карачаевск</h2>
-        <button class="element__like-button"></button>
+      <div class="profile__info">
+        <h1 class="profile__title" id="profile__title">Жак-Ив Кусто</h1>
+        <button class="profile__edit-button" id="profile__edit-button" type="button"></button>
+        <p class="profile__text" id="profile__text">Исследователь океана</p>
       </div>
-    </div>
-    <div class="element">
-      <img class="element__image" src="images/Elbrus.png" alt="Эльбрус">
-      <div class="element__footer">
-        <h2 class="element__title">Гора Эльбрус</h2>
-        <button class="element__like-button"></button>
+      <button class="profile__add-button" type="button"></button>
+    </section>
+    <section class="elements">
+      <div class="element">
+        <img class="element__image" src="images/Karajevsk.jpg" alt="Карачаевск">
+        <div class="element__footer">
+          <h3 class="element__title">Карачаевск</h3>
+          <button class="element__like-button" type="button"></button>
+        </div>
       </div>
-    </div>
-    <div class="element">
-      <img class="element__image" src="images/Dombai.png" alt="Домбай">
-      <div class="element__footer">
-        <h2 class="element__title">Домбай</h2>
-        <button class="element__like-button"></button>
+      <div class="element">
+        <img class="element__image" src="images/Elbrus.png" alt="Эльбрус">
+        <div class="element__footer">
+          <h3 class="element__title">Гора Эльбрус</h3>
+          <button class="element__like-button" type="button"></button>
+        </div>
       </div>
-    </div>
-    <div class="element">
-      <img class="element__image" src="images/Elbrus.png" alt="Эльбрус">
-      <div class="element__footer">
-        <h2 class="element__title">Гора Эльбрус</h2>
-        <button class="element__like-button"></button>
+      <div class="element">
+        <img class="element__image" src="images/Dombai.png" alt="Домбай">
+        <div class="element__footer">
+          <h3 class="element__title">Домбай</h3>
+          <button class="element__like-button" type="button"></button>
+        </div>
       </div>
-    </div>
-    <div class="element">
-      <img class="element__image" src="images/Dombai.png" alt="Домбай">
-      <div class="element__footer">
-        <h2 class="element__title">Домбай</h2>
-        <button class="element__like-button"></button>
+      <div class="element">
+        <img class="element__image" src="images/Elbrus.png" alt="Эльбрус">
+        <div class="element__footer">
+          <h3 class="element__title">Гора Эльбрус</h3>
+          <button class="element__like-button" type="button"></button>
+        </div>
       </div>
-    </div>
-    <div class="element">
-      <img class="element__image" src="images/Karajevsk.jpg" alt="Карачаевск">
-      <div class="element__footer">
-        <h2 class="element__title">Карачаево-Черкессия</h2>
-        <button class="element__like-button"></button>
+      <div class="element">
+        <img class="element__image" src="images/Dombai.png" alt="Домбай">
+        <div class="element__footer">
+          <h3 class="element__title">Домбай</h3>
+          <button class="element__like-button" type="button"></button>
+        </div>
       </div>
-    </div>
-  </section>
+      <div class="element">
+        <img class="element__image" src="images/Karajevsk.jpg" alt="Карачаевск">
+        <div class="element__footer">
+          <h3 class="element__title">Карачаево-Черкессия</h3>
+          <button class="element__like-button" type="button"></button>
+        </div>
+      </div>
+    </section>
+  </main>
   <footer class="footer">
     <p class="footer__text">© 2022 Mesto Russia</p>
   </footer>
 
-  <div class="edit-form" id="edit-form">
-    <div class="edit-form__overlay"></div>
-    <div class="edit-form__container">
-      <form class="edit-form__form">
-        <img class="edit-form__close-icon" id="edit-form__close-icon" src="images/close-icon.png" alt="Редактировать">
-        <p class="edit-form__title">Редактировать профиль</p>
-        <input class="edit-form__field-one" id="edit-form__field-one" type="text" value="Жак-Ив Кусто">
-        <div class="edit-form__line"></div>
-        <input class="edit-form__field-two" id="edit-form__field-two" type="text" value="Исследователь океана">
-        <div class="edit-form__line"></div>
-        <button class="edit-form__submit-btn" id="edit-form__submit-btn" type="submit">Сохранить</button>
+  <div class="popup" id="popup">
+    <div class="popup__overlay"></div>
+    <div class="popup__container">
+      <form class="popup__form" name="profile_form">
+        <button class="popup__close-icon" id="popup__close-icon" type="button"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input class="popup__field" type="text" value="Жак-Ив Кусто" id="profile_name_input" name="profile_name_input">
+        <input class="popup__field" type="text" value="Исследователь океана" id="profile_job_input" name="profile_job_input">
+        <button class="popup__submit-btn" id="popup__submit-btn" type="submit">Сохранить</button>
       </form>
     </div>
   </div>
 
-  <script src="./script.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 
 </html>
