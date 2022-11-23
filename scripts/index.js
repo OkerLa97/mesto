@@ -1,8 +1,8 @@
 // ПОИСК ЭЛЕМЕНТОВ ПО DOM
-var editFormCloseIcon = document.getElementById('popup__close-icon');
+var editFormCloseButton = document.getElementById('popup__close-button');
 var editForm = document.getElementById('popup')
 var profileEditButton = document.getElementById('profile__edit-button');
-var editFormSubmitButton = document.getElementById('popup__submit-btn');
+var popupForm = document.getElementById("popup__form");
 
 var profileNameInput = document.getElementById('profile_name_input');
 var profileTitle = document.getElementById('profile__title');
@@ -12,8 +12,8 @@ var profileText = document.getElementById('profile__text');
 
 
 // КЛИК ПО КНОПКЕ РЕДАКТИРОВАНИЕ ПРОФАЙЛА
-editFormCloseIcon.addEventListener('click', editFormCloseIconClick);
-function editFormCloseIconClick() {
+editFormCloseButton.addEventListener('click', onEditFormCloseButtonClick);
+function onEditFormCloseButtonClick() {
   editForm.classList.remove('popup_open')
 }
 
@@ -26,16 +26,16 @@ function onProfileEditButtonClick() {;
 // КЛИК ПО КНОПКЕ СОХРАНИТЬ ПРОФИЛЬ
 //- БЕРЁТ значения из первого и второго инпута и встовляет значения
 // в соответствующие html елементы - profile__info , profile__title
-editFormSubmitButton.addEventListener('click', editFormSubmitButtonClick);
-function editFormSubmitButtonClick(event) {
+popupForm.addEventListener('submit', onPopupFormSubmit);
+function onPopupFormSubmit(event) {
 
   event.preventDefault();
 
   let profileName = profileNameInput.value;
-  profileTitle.innerHTML = profileName;
+  profileTitle.textContent = profileName;
 
   let profileJob = profileJobInput.value;
-  profileText.innerHTML = profileJob;
+  profileText.textContent = profileJob;
 
-  editFormCloseIconClick()
+  onEditFormCloseButtonClick()
 }

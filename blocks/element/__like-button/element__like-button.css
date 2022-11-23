@@ -5,6 +5,8 @@
   background-position:center;
   width:22px;
   height:19px;
+  background-size:22px 19px;
+  padding:0;
   cursor:pointer;
   transition:all 0.5s;
 }
