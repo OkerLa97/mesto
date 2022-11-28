@@ -8,13 +8,14 @@
 
 @media screen and (max-width:1024px) {
   .elements {
-    width:calc(100% - 19px * 2);
+    max-width:580px;
     grid-template-columns:1fr 1fr;
   }
 }
 
 @media screen and (max-width:768px) {
   .elements {
+    max-width:282px;
     grid-template-columns:1fr;
     margin-top:36px;
   }

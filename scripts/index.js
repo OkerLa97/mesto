@@ -39,3 +39,70 @@ function onPopupFormSubmit(event) {
 
   onEditFormCloseButtonClick()
 }
+
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+var elements = document.querySelector(".elements");
+
+var cardTemplate = document.getElementById("card-template").content;
+var element = cardTemplate.querySelector(".element");
+initialCards.forEach( item => {
+  var elementCopy = element.cloneNode(true);
+
+  // Добавление картинки
+  var elementImage = elementCopy.querySelector(".element__image");
+
+  // После загрузки картинки, устанавливаем ей размеры
+  elementImage.onload = function() {
+    var width = elementImage.naturalWidth;
+    var height = elementImage.naturalHeight;
+    var format = width / height;
+    if (format > 1) {
+      elementImage.classList.add("element__image_position-height");
+    } else {
+      elementImage.classList.add("element__image_position-width");
+    }
+  };
+  elementImage.src = item.link;
+  elementImage.alt = item.name;
+
+
+
+  // Добавление названия
+  var elementTitle = elementCopy.querySelector(".element__title");
+  elementTitle.textContent = item.name;
+
+  // Добавление лайка
+  var elementLike = elementCopy.querySelector(".element__like-button");
+  elementLike.addEventListener("click", onElementLikeClick);
+  function onElementLikeClick() {
+    elementLike.classList.toggle("element__like-button_active");
+  }
+  
+  elements.append(elementCopy);
+});
