@@ -45,8 +45,31 @@
     </div>
   </div>
 
+  <div class="popup" id="new-place-popup">
+    <div class="popup__overlay"></div>
+    <div class="popup__container">
+      <form class="popup__form" id="new-place-popup__form" name="new_place_form">
+        <button class="popup__close-button" id="new-place-popup__close-button" type="button"></button>
+        <h3 class="popup__title">Новое место</h3>
+        <input class="popup__field" type="text" id="new-place-name-input" placeholder="Название" name="new-place-name-input">
+        <input class="popup__field" type="text" id="new-place-link-input" placeholder="Ссылка на картинку" name="new-place-link-input">
+        <button class="popup__submit-btn" id="new-place-popup__submit-btn" type="submit">Создать</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup" id="popup-image">
+    <div class="popup__overlay"></div>
+    <div class="popup__container">
+      <button class="popup__close-button" id="popup-image__close-button" type="button"></button>
+      <img class="popup__image" src="#" id="popup-image__image" alt="Всплывающая картинка">
+      <p class="popup__image-paragraph" id="popup-image__name"></p>
+    </div>
+  </div>
+
   <template id="card-template">
     <div class="element">
+      <button class="element__delete-btn"></button>
       <div class="element__image-container">
         <img class="element__image" src="images/Dombai.png">
       </div>
