@@ -1,7 +1,5 @@
 .popup__container {
   position:absolute;
-  left:0;
-  top:0;
 
   max-width:80%;
   max-height:80%;
