@@ -19,7 +19,7 @@
       <img class="profile__image" src="images/avatar-image.jpg" alt="Жак-Ив">
       <div class="profile__info">
         <div class="profile__header">
-          <h1 class="profile__title" id="profile__title">Жак-Ив Кусто</h1>
+          <h1 class="profile__title" id="profile-title">Жак-Ив Кусто</h1>
           <button class="profile__edit-button" id="profile__edit-button" type="button"></button>
         </div>
         <p class="profile__text" id="profile__text">Исследователь океана</p>
@@ -32,14 +32,14 @@
     <p class="footer__text">© 2022 Mesto Russia</p>
   </footer>
 
-  <div class="popup" id="popup">
+  <div class="popup" id="edit-profile-popup">
     <div class="popup__overlay"></div>
     <div class="popup__container">
-      <form class="popup__form" id="popup__form" name="profile_form">
-        <button class="popup__close-button" id="popup__close-button" type="button"></button>
+      <form class="popup__form" id="edit-profile_form" name="edit-profile_form">
+        <button class="popup__close-button" id="edit-profile-popup-close-button" type="button"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
-        <input class="popup__field" type="text" value="Жак-Ив Кусто" id="profile_name_input" name="profile_name_input">
-        <input class="popup__field" type="text" value="Исследователь океана" id="profile_job_input" name="profile_job_input">
+        <input class="popup__field" type="text" value="Жак-Ив Кусто" id="edit-profile_name_input" name="edit-profile_name_input">
+        <input class="popup__field" type="text" value="Исследователь океана" id="edit-profile-job-input" name="edit-profile-job-input">
         <button class="popup__submit-btn" id="popup__submit-btn" type="submit">Сохранить</button>
       </form>
     </div>
@@ -48,8 +48,8 @@
   <div class="popup" id="new-place-popup">
     <div class="popup__overlay"></div>
     <div class="popup__container">
-      <form class="popup__form" id="new-place-popup__form" name="new_place_form">
-        <button class="popup__close-button" id="new-place-popup__close-button" type="button"></button>
+      <form class="popup__form" id="new-place-popup-form" name="new_place_form">
+        <button class="popup__close-button" id="new-place-popup-close-button" type="button"></button>
         <h3 class="popup__title">Новое место</h3>
         <input class="popup__field" type="text" id="new-place-name-input" placeholder="Название" name="new-place-name-input">
         <input class="popup__field" type="text" id="new-place-link-input" placeholder="Ссылка на картинку" name="new-place-link-input">
@@ -61,9 +61,9 @@
   <div class="popup" id="popup-image">
     <div class="popup__overlay"></div>
     <div class="popup__container">
-      <button class="popup__close-button" id="popup-image__close-button" type="button"></button>
-      <img class="popup__image" src="#" id="popup-image__image" alt="Всплывающая картинка">
-      <p class="popup__image-paragraph" id="popup-image__name"></p>
+      <button class="popup__close-button" id="popup-image-close-button" type="button"></button>
+      <img class="popup__image" src="#" id="popup-image-image" alt="Всплывающая картинка">
+      <p class="popup__image-paragraph" id="popup-image-name"></p>
     </div>
   </div>
 

@@ -1,100 +1,5 @@
-// ПОИСК ЭЛЕМЕНТОВ ПО DOM
-var editFormCloseButton = document.getElementById('popup__close-button');
-var editForm = document.getElementById('popup')
-var profileEditButton = document.getElementById('profile__edit-button');
-var popupForm = document.getElementById("popup__form");
-
-var profileNameInput = document.getElementById('profile_name_input');
-var profileTitle = document.getElementById('profile__title');
-
-var profileJobInput = document.getElementById('profile_job_input');
-var profileText = document.getElementById('profile__text');
-
-var addNewPlaceBtn = document.querySelector(".profile__add-button");
-var newPlacePopUp = document.querySelector("#new-place-popup");
-var newPlacePopUpCloseBtn = document.querySelector("#new-place-popup__close-button");
-var newPlaceForm = document.querySelector("#new-place-popup__form");
-var newPlaceNameInput = document.querySelector("#new-place-name-input");
-var newPlaceLinkInput = document.querySelector("#new-place-link-input");
-
-var popupImage = document.querySelector("#popup-image");
-var popupImageCloseBtn = document.querySelector("#popup-image__close-button");
-var popupImageImage = document.querySelector("#popup-image__image");
-var popupImageName = document.querySelector("#popup-image__name");
-popupImageCloseBtn.addEventListener("click", event => {
-  closePopup(popupImage);
-});
-
-function closePopup(popup) {
-    popup.classList.remove("popup_open");
-}
-
-function openPopup(popup) {
-    popup.classList.add("popup_open");
-}
-
-// КЛИК ПО КНОПКЕ РЕДАКТИРОВАНИЕ ПРОФАЙЛА
-editFormCloseButton.addEventListener('click', onEditFormCloseButtonClick);
-function onEditFormCloseButtonClick() {
-  closePopup(editForm);
-}
-
-// КЛИК ПО КРЕСТИКУ ДЛЯ ЗАКРЫТИЯ ФОРМЫ РЕДАКТИРОВАНИЕ ПРОФАЙЛА
-profileEditButton.addEventListener("click", onProfileEditButtonClick);
-function onProfileEditButtonClick() {;
-  openPopup(editForm);
-}
-
-// КЛИК ПО КНОПКЕ СОХРАНИТЬ ПРОФИЛЬ
-//- БЕРЁТ значения из первого и второго инпута и встовляет значения
-// в соответствующие html елементы - profile__info , profile__title
-popupForm.addEventListener('submit', onPopupFormSubmit);
-function onPopupFormSubmit(event) {
-
-  event.preventDefault();
-
-  let profileName = profileNameInput.value;
-  profileTitle.textContent = profileName;
-
-  let profileJob = profileJobInput.value;
-  profileText.textContent = profileJob;
-
-  closePopup(editForm);
-}
-
-// КЛИК ПО КНОПКУ ДОБАВИТЬ МЕСТО
-addNewPlaceBtn.addEventListener("click", onAddNewPlaceBtnClick);
-function onAddNewPlaceBtnClick() {
-  openPopup(newPlacePopUp);
-}
-
-// КЛИК ПО КРЕСИКУ ДЛЯ ЗАКРЫТИЯ ФОРМЫ ДОБАВИТЬ МЕСТО
-newPlacePopUpCloseBtn.addEventListener("click", onNewPlacePopUpCloseBtn);
-function onNewPlacePopUpCloseBtn(){
-  closePopup(newPlacePopUp);
-}
-
-// КЛИК ПО КНОПКЕ СОХРАНИТЬ МЕСТО
-newPlaceForm.addEventListener("submit", onNewPlaceFormSubmit);
-function onNewPlaceFormSubmit(event) {
-  event.preventDefault();
-  addNewPlace(newPlaceNameInput.value, newPlaceLinkInput.value);
-  closePopup(newPlacePopUp);
-}
-
-function addNewPlace(name, link) {
-
-  let newPlace = {
-    name: name,
-    link: link,
-  }
-  
-  // Создаём карточку в начале списка
-  initialCards.unshift(newPlace);
-  renderCards();
-}
-
-var initialCards = [
+// 1. Стагдартные значения (Конфигурация)
+const initialCards = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -121,73 +26,201 @@ var initialCards = [
   }
 ];
 
-var elements = document.querySelector(".elements");
+// Стандартное изображение в случае если ссылка не правильная или возникла ошибка
+const imageErrorSource = "https://images.unsplash.com/photo-1525785967371-87ba44b3e6cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80";
 
-var cardTemplate = document.getElementById("card-template").content;
-var element = cardTemplate.querySelector(".element");
-renderCards();
+// 2. Поиск элементов по ДОМ
 
-function renderCards(){
-  initialCards.forEach( (item, index) => {
+// Темлейт карточки
+const cardTemplate = document.getElementById("card-template").content;
+const element = cardTemplate.querySelector(".element");
 
-    // Удалить предыдущий элемент
-    if(item.node){
-      item.node.remove();
-    }
-  
-    var elementCopy = element.cloneNode(true);
-    item.node = elementCopy;
-  
-    // Добавление картинки
-    var elementImage = elementCopy.querySelector(".element__image");
+// Секция елементов карточек
+const elements = document.querySelector(".elements");
 
-    var elementImageContainer = elementCopy.querySelector(".element__image-container");
-    elementImageContainer.addEventListener("click", event => {
-      openPopup(popupImage);
-      popupImageImage.src = item.link;
-      popupImageName.textContent = item.name;
-    });
-  
-    // После загрузки картинки, устанавливаем ей размеры
-    elementImage.onload = () => {
-      var width = elementImage.naturalWidth;
-      var height = elementImage.naturalHeight;
-      var format = width / height;
-      if (format > 1) {
-        elementImage.classList.add("element__image_position-height");
-      } else {
-        elementImage.classList.add("element__image_position-width");
-      }
-    };
-    
-    elementImage.src = item.link;
-    elementImage.alt = item.name;
-  
-    // Добавление названия
-    var elementTitle = elementCopy.querySelector(".element__title");
-    elementTitle.textContent = item.name;
-  
-    // Добавление лайка
-    var elementLike = elementCopy.querySelector(".element__like-button");
-    elementLike.addEventListener("click", onElementLikeClick);
-    function onElementLikeClick() {
-      elementLike.classList.toggle("element__like-button_active");
-    }
-  
-    // Добавление удаления
-    var elementDelete = elementCopy.querySelector(".element__delete-btn");
-    // Добавление индекса
-    elementDelete.setAttribute("data-index", index);
-    elementDelete.addEventListener("click", onElementDeleteClick);
-    elements.append(elementCopy);
-  });
+// Кнопка редактирования профайла
+const profileEditButton = document.getElementById('profile__edit-button');
+
+// Попап редактирования профайла
+const editProfilePopupCloseButton = document.getElementById('edit-profile-popup-close-button');
+const editProfilePopup = document.getElementById('edit-profile-popup')
+
+// Форма редактирования профайла в попапе
+const editProfileForm = document.getElementById("edit-profile_form");
+const editProfileNameInput = document.getElementById('edit-profile_name_input');
+const editProfileJobInput = document.getElementById('edit-profile-job-input');
+
+// Элементы профайл загаловка и текста на странице
+const profileTitle = document.getElementById('profile-title');
+const profileText = document.getElementById('profile__text');
+
+// Кнопка добавления места
+const addNewPlaceBtn = document.querySelector(".profile__add-button");
+
+// Попап добавления места
+const newPlacePopUp = document.querySelector("#new-place-popup");
+const newPlacePopUpCloseBtn = document.querySelector("#new-place-popup-close-button");
+
+// Форма добавления места в попапе
+const newPlaceForm = document.querySelector("#new-place-popup-form");
+const newPlaceNameInput = document.querySelector("#new-place-name-input");
+const newPlaceLinkInput = document.querySelector("#new-place-link-input");
+
+// Попап изображения
+const popupImage = document.querySelector("#popup-image");
+const popupImageCloseBtn = document.querySelector("#popup-image-close-button");
+const popupImageImage = document.querySelector("#popup-image-image");
+const popupImageName = document.querySelector("#popup-image-name");
+
+// 3. Регистрирование событий и обработка
+
+// Клик по кнопке редактировать профайл
+profileEditButton.addEventListener("click", handleProfileEditButtonClick);
+function handleProfileEditButtonClick() {;
+  openPopup(editProfilePopup);
 }
 
+// Клик по кнопке закрытия попапа добавления места
+newPlacePopUpCloseBtn.addEventListener("click", handleNewPlacePopUpCloseBtn);
+function handleNewPlacePopUpCloseBtn(){
+  closePopup(newPlacePopUp);
+}
 
-function onElementDeleteClick(event) {
-  var elementDelete = event.currentTarget;
-  var index = elementDelete.getAttribute("data-index");
-  initialCards.splice(index, 1);
-  var element = elementDelete.closest(".element");
+// Клик по кнопкам закрытия попапа
+const closeButtons = document.querySelectorAll(".popup__close-button");
+closeButtons.forEach((button) => {
+  button.addEventListener("click", event => {
+    const popup = event.currentTarget.closest(".popup");
+    closePopup(popup);
+  });
+});
+
+// Отправка формы редактирования профайла
+//- БЕРЁТ значения из первого и второго инпута и встовляет значения
+// в соответствующие html елементы - profile__info , profile__title
+editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
+function handleEditProfileFormSubmit(event) {
+
+  event.preventDefault();
+
+  const profileName = editProfileNameInput.value;
+  profileTitle.textContent = profileName;
+
+  const profileJob = editProfileJobInput.value;
+  profileText.textContent = profileJob;
+
+  closePopup(editProfilePopup);
+}
+
+// Клик по кнопке добавить место
+addNewPlaceBtn.addEventListener("click", handleAddNewPlaceBtnClick);
+function handleAddNewPlaceBtnClick() {
+  openPopup(newPlacePopUp);
+}
+
+// Отправка формы добавления места
+newPlaceForm.addEventListener("submit", handleNewPlaceFormSubmit);
+function handleNewPlaceFormSubmit(event) {
+  event.preventDefault();
+  const newCard = createCard(newPlaceNameInput.value, newPlaceLinkInput.value);
+  insertCardIntoElementsBefore(newCard);
+  closePopup(newPlacePopUp);
+  event.target.reset();
+}
+
+// Обработка ошибки загрузки изображения
+popupImageImage.addEventListener("error", handleImagePopupError);
+function handleImagePopupError(event) {
+  event.target.src = imageErrorSource;
+}
+
+// 3. Вспомогательные функции
+
+// Функции для открытия и закрытия попапов
+function closePopup(popup) {
+  popup.classList.remove("popup_open");
+}
+
+function openPopup(popup) {
+  popup.classList.add("popup_open");
+}
+
+// функция для вставки карточки в начало списка
+function insertCardIntoElementsBefore(card) {
+  elements.prepend(card);
+}
+
+// Функция для вставки карточки в конец списка
+function insertCardIntoElementsAfter(card) {
+  elements.append(card);
+}
+
+// Функция создания карточки
+function createCard(name, link){
+
+  const elementCopy = element.cloneNode(true);
+
+  // Добавление картинки
+  const elementImage = elementCopy.querySelector(".element__image");
+  const elementImageContainer = elementCopy.querySelector(".element__image-container");
+  elementImageContainer.addEventListener("click", event => {
+    openPopup(popupImage);
+    popupImageImage.src = link;
+    popupImageName.textContent = name
+  });
+
+  // После загрузки картинки, устанавливаем ей размеры
+  elementImage.onload = () => {
+    const width = elementImage.naturalWidth;
+    const height = elementImage.naturalHeight;
+    const format = width / height;
+    if (format > 1) {
+      elementImage.classList.add("element__image_position-height");
+    } else {
+      elementImage.classList.add("element__image_position-width");
+    }
+  };
+
+  // Ошибка загрузки картинки
+  elementImage.onerror = () => {
+    console.log("С картинкой что то не так. Там будет грустный котик (((");
+    console.log("CORS политика, или неправильная ссылка");
+    elementImage.src = imageErrorSource;
+  }
+
+  elementImage.src = link;
+  elementImage.alt = name;
+
+  // Добавление названия
+  const elementTitle = elementCopy.querySelector(".element__title");
+  elementTitle.textContent = name;
+
+  // Добавление лайка
+  const elementLike = elementCopy.querySelector(".element__like-button");
+  elementLike.addEventListener("click", handleElementLikeClick);
+
+  // Добавление удаления
+  const elementDelete = elementCopy.querySelector(".element__delete-btn");
+  elementDelete.addEventListener("click", handleElementDeleteClick);
+
+  return elementCopy;
+}
+
+// Кнопка лайк
+function handleElementLikeClick(event) {
+  event.currentTarget.classList.toggle("element__like-button_active");
+}
+
+// Кнопка удаления карточки
+function handleElementDeleteClick(event) {
+  const elementDelete = event.currentTarget;
+  const element = elementDelete.closest(".element");
   element.remove();
 }
+
+// 4. Стартуем
+// Реверсируем массив с карточками и добавляем их на страницу
+initialCards.forEach( item => {
+  const newCard =  createCard(item.name, item.link);
+  insertCardIntoElementsAfter(newCard);
+});
