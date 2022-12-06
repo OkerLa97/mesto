@@ -28,6 +28,7 @@ const initialCards = [
 
 // Стандартное изображение в случае если ссылка не правильная или возникла ошибка
 const imageErrorSource = "https://images.unsplash.com/photo-1525785967371-87ba44b3e6cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80";
+const imageErrorAlt = "Изображение не загрузилось";
 
 // 2. Поиск элементов по ДОМ
 
@@ -89,8 +90,8 @@ function handleNewPlacePopUpCloseBtn(){
 // Клик по кнопкам закрытия попапа
 const closeButtons = document.querySelectorAll(".popup__close-button");
 closeButtons.forEach((button) => {
+  const popup = button.closest(".popup");   // 1 раз находим попап (а не при каждом клике)
   button.addEventListener("click", event => {
-    const popup = event.currentTarget.closest(".popup");
     closePopup(popup);
   });
 });
@@ -131,7 +132,9 @@ function handleNewPlaceFormSubmit(event) {
 // Обработка ошибки загрузки изображения
 popupImageImage.addEventListener("error", handleImagePopupError);
 function handleImagePopupError(event) {
-  event.target.src = imageErrorSource;
+  const target = event.target;
+  target.src = imageErrorSource;
+  target.alt = imageErrorAlt;
 }
 
 // 3. Вспомогательные функции
@@ -166,6 +169,7 @@ function createCard(name, link){
   elementImageContainer.addEventListener("click", event => {
     openPopup(popupImage);
     popupImageImage.src = link;
+    popupImageImage.alt = name;
     popupImageName.textContent = name
   });
 
@@ -186,6 +190,7 @@ function createCard(name, link){
     console.log("С картинкой что то не так. Там будет грустный котик (((");
     console.log("CORS политика, или неправильная ссылка");
     elementImage.src = imageErrorSource;
+    elementImage.alt = imageErrorAlt;
   }
 
   elementImage.src = link;
