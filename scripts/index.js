@@ -1,4 +1,4 @@
-// 1. Стагдартные значения (Конфигурация)
+// 1. Стандартные значения (Конфигурация)
 const initialCards = [
   {
     name: 'Архыз',
@@ -218,7 +218,7 @@ function handleElementDeleteClick(event) {
 }
 
 // 4. Стартуем
-// Реверсируем массив с карточками и добавляем их на страницу
+// Добавляем карточки из стандартного массива
 initialCards.forEach( item => {
   const newCard =  createCard(item.name, item.link);
   insertCardIntoElementsAfter(newCard);
