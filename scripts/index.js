@@ -81,12 +81,6 @@ function handleProfileEditButtonClick() {;
   openPopup(editProfilePopup);
 }
 
-// Клик по кнопке закрытия попапа добавления места
-newPlacePopUpCloseBtn.addEventListener("click", handleNewPlacePopUpCloseBtn);
-function handleNewPlacePopUpCloseBtn(){
-  closePopup(newPlacePopUp);
-}
-
 // Клик по кнопкам закрытия попапа
 const closeButtons = document.querySelectorAll(".popup__close-button");
 closeButtons.forEach((button) => {
