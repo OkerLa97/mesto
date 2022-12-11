@@ -48,7 +48,7 @@ const editProfilePopup = document.getElementById('edit-profile-popup')
 
 // Форма редактирования профайла в попапе
 const editProfileForm = document.getElementById("edit-profile_form");
-const editProfileNameInput = document.getElementById('edit-profile_name_input');
+const editProfileNameInput = document.getElementById('edit-profile-name-input');
 const editProfileJobInput = document.getElementById('edit-profile-job-input');
 
 // Элементы профайл загаловка и текста на странице
@@ -86,6 +86,15 @@ const closeButtons = document.querySelectorAll(".popup__close-button");
 closeButtons.forEach((button) => {
   const popup = button.closest(".popup");   // 1 раз находим попап (а не при каждом клике)
   button.addEventListener("click", event => {
+    closePopup(popup);
+  });
+});
+
+// Клик по оверлею для закрытия попапа
+const popupOverlays = document.querySelectorAll(".popup__overlay");
+popupOverlays.forEach((overlay) => {
+  overlay.addEventListener("click", event => {
+    const popup = event.target.closest(".popup");
     closePopup(popup);
   });
 });
@@ -222,4 +231,14 @@ function handleElementDeleteClick(event) {
 initialCards.forEach( item => {
   const newCard =  createCard(item.name, item.link);
   insertCardIntoElementsAfter(newCard);
+});
+
+// Запускаем валидацию, код валидации в отдельном файле validation.js
+enableValidation({
+  formSelector: ".popup__form",
+  inputSelector: ".popup__field",
+  submitButtonSelector: ".popup__submit-btn",
+  inactiveButtonClass: "popup__submit-btn_disabled",
+  inputErrorClass: "popup__field_type_error",
+  errorClass: "popup__field-error_active",
 });
