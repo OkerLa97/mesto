@@ -33,27 +33,27 @@ const imageErrorAlt = "Изображение не загрузилось";
 // 2. Поиск элементов по ДОМ
 
 // Темлейт карточки
-const cardTemplate = document.getElementById("card-template").content;
+const cardTemplate = document.querySelector("#card-template").content;
 const element = cardTemplate.querySelector(".element");
 
 // Секция елементов карточек
 const elements = document.querySelector(".elements");
 
 // Кнопка редактирования профайла
-const profileEditButton = document.getElementById('profile__edit-button');
+const profileEditButton = document.querySelector('#profile__edit-button');
 
 // Попап редактирования профайла
-const editProfilePopupCloseButton = document.getElementById('edit-profile-popup-close-button');
-const editProfilePopup = document.getElementById('edit-profile-popup')
+const editProfilePopupCloseButton = document.querySelector('#edit-profile-popup-close-button');
+const editProfilePopup = document.querySelector('#edit-profile-popup')
 
 // Форма редактирования профайла в попапе
-const editProfileForm = document.getElementById("edit-profile_form");
-const editProfileNameInput = document.getElementById('edit-profile-name-input');
-const editProfileJobInput = document.getElementById('edit-profile-job-input');
+const editProfileForm = document.querySelector("#edit-profile_form");
+const editProfileNameInput = document.querySelector('#edit-profile-name-input');
+const editProfileJobInput = document.querySelector('#edit-profile-job-input');
 
 // Элементы профайл загаловка и текста на странице
-const profileTitle = document.getElementById('profile-title');
-const profileText = document.getElementById('profile__text');
+const profileTitle = document.querySelector('#profile-title');
+const profileText = document.querySelector('#profile__text');
 
 // Кнопка добавления места
 const addNewPlaceBtn = document.querySelector(".profile__add-button");
@@ -77,14 +77,17 @@ const popupImageName = document.querySelector("#popup-image-name");
 
 // Клик по кнопке редактировать профайл
 profileEditButton.addEventListener("click", handleProfileEditButtonClick);
-function handleProfileEditButtonClick() {;
+function handleProfileEditButtonClick() {
+  // Заполняем поля формы данными из профайла
+  editProfileNameInput.value = profileTitle.textContent;
+  editProfileJobInput.value = profileText.textContent;
   openPopup(editProfilePopup);
 }
 
 // Клик по кнопкам закрытия попапа
 const closeButtons = document.querySelectorAll(".popup__close-button");
 closeButtons.forEach((button) => {
-  const popup = button.closest(".popup");   // 1 раз находим попап (а не при каждом клике)
+  const popup = button.closest(".popup");
   button.addEventListener("click", event => {
     closePopup(popup);
   });
@@ -129,7 +132,7 @@ function handleNewPlaceFormSubmit(event) {
   const newCard = createCard(newPlaceNameInput.value, newPlaceLinkInput.value);
   insertCardIntoElementsBefore(newCard);
   closePopup(newPlacePopUp);
-  event.target.reset();
+  resetForm(event.target);
 }
 
 // Обработка ошибки загрузки изображения
@@ -145,10 +148,22 @@ function handleImagePopupError(event) {
 // Функции для открытия и закрытия попапов
 function closePopup(popup) {
   popup.classList.remove("popup_open");
+  // удаляем слушатель на Esc
+  document.removeEventListener("keydown", handleEscClose);
 }
 
 function openPopup(popup) {
   popup.classList.add("popup_open");
+  // добавляем слушатель на Esc
+  document.addEventListener("keydown", handleEscClose);
+}
+
+// Функция закрытия попапа по Esc
+function handleEscClose(event) {
+  if (event.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_open");
+    closePopup(openedPopup);
+  }
 }
 
 // функция для вставки карточки в начало списка
@@ -224,6 +239,14 @@ function handleElementDeleteClick(event) {
   const elementDelete = event.currentTarget;
   const element = elementDelete.closest(".element");
   element.remove();
+}
+
+// Сброс формы и кнопки
+function resetForm(form) {
+  form.reset();
+  const button = form.querySelector(".popup__submit-btn");
+  button.classList.add("popup__submit-btn_disabled");
+  button.setAttribute("disabled", true);
 }
 
 // 4. Стартуем
