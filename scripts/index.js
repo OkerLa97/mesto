@@ -1,3 +1,6 @@
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
+
 // 1. Стандартные значения (Конфигурация)
 const initialCards = [
   {
@@ -43,7 +46,6 @@ const elements = document.querySelector(".elements");
 const profileEditButton = document.querySelector('#profile__edit-button');
 
 // Попап редактирования профайла
-const editProfilePopupCloseButton = document.querySelector('#edit-profile-popup-close-button');
 const editProfilePopup = document.querySelector('#edit-profile-popup')
 
 // Форма редактирования профайла в попапе
@@ -66,12 +68,6 @@ const newPlacePopUpCloseBtn = document.querySelector("#new-place-popup-close-but
 const newPlaceForm = document.querySelector("#new-place-popup-form");
 const newPlaceNameInput = document.querySelector("#new-place-name-input");
 const newPlaceLinkInput = document.querySelector("#new-place-link-input");
-
-// Попап изображения
-const popupImage = document.querySelector("#popup-image");
-const popupImageCloseBtn = document.querySelector("#popup-image-close-button");
-const popupImageImage = document.querySelector("#popup-image-image");
-const popupImageName = document.querySelector("#popup-image-name");
 
 // 3. Регистрирование событий и обработка
 
@@ -129,21 +125,22 @@ function handleAddNewPlaceBtnClick() {
 newPlaceForm.addEventListener("submit", handleNewPlaceFormSubmit);
 function handleNewPlaceFormSubmit(event) {
   event.preventDefault();
-  const newCard = createCard(newPlaceNameInput.value, newPlaceLinkInput.value);
-  insertCardIntoElementsBefore(newCard);
+  const card = new Card({name:newPlaceNameInput.value, link:newPlaceLinkInput.value}, "#card-template");
+  const workingCard = card.generateCard();
+  insertCardIntoElementsBefore(workingCard);
   closePopup(newPlacePopUp);
   resetForm(event.target);
-}
-
-// Обработка ошибки загрузки изображения
-popupImageImage.addEventListener("error", handleImagePopupError);
-function handleImagePopupError(event) {
-  const target = event.target;
-  target.src = imageErrorSource;
-  target.alt = imageErrorAlt;
+  newPlaceFormValidator.resetValidation();
 }
 
 // 3. Вспомогательные функции
+// Сброс формы и кнопки
+function resetForm(form) {
+  form.reset();
+  const button = form.querySelector(".popup__submit-btn");
+  button.classList.add("popup__submit-btn_disabled");
+  button.setAttribute("disabled", true);
+}
 
 // Функции для открытия и закрытия попапов
 function closePopup(popup) {
@@ -176,92 +173,25 @@ function insertCardIntoElementsAfter(card) {
   elements.append(card);
 }
 
-// Функция создания карточки
-function createCard(name, link){
-
-  const elementCopy = element.cloneNode(true);
-
-  // Добавление картинки
-  const elementImage = elementCopy.querySelector(".element__image");
-  const elementImageContainer = elementCopy.querySelector(".element__image-container");
-  elementImageContainer.addEventListener("click", event => {
-    openPopup(popupImage);
-    popupImageImage.src = link;
-    popupImageImage.alt = name;
-    popupImageName.textContent = name
-  });
-
-  // После загрузки картинки, устанавливаем ей размеры
-  elementImage.onload = () => {
-    const width = elementImage.naturalWidth;
-    const height = elementImage.naturalHeight;
-    const format = width / height;
-    if (format > 1) {
-      elementImage.classList.add("element__image_position-height");
-    } else {
-      elementImage.classList.add("element__image_position-width");
-    }
-  };
-
-  // Ошибка загрузки картинки
-  elementImage.onerror = () => {
-    console.log("С картинкой что то не так. Там будет грустный котик (((");
-    console.log("CORS политика, или неправильная ссылка");
-    elementImage.src = imageErrorSource;
-    elementImage.alt = imageErrorAlt;
-  }
-
-  elementImage.src = link;
-  elementImage.alt = name;
-
-  // Добавление названия
-  const elementTitle = elementCopy.querySelector(".element__title");
-  elementTitle.textContent = name;
-
-  // Добавление лайка
-  const elementLike = elementCopy.querySelector(".element__like-button");
-  elementLike.addEventListener("click", handleElementLikeClick);
-
-  // Добавление удаления
-  const elementDelete = elementCopy.querySelector(".element__delete-btn");
-  elementDelete.addEventListener("click", handleElementDeleteClick);
-
-  return elementCopy;
-}
-
-// Кнопка лайк
-function handleElementLikeClick(event) {
-  event.currentTarget.classList.toggle("element__like-button_active");
-}
-
-// Кнопка удаления карточки
-function handleElementDeleteClick(event) {
-  const elementDelete = event.currentTarget;
-  const element = elementDelete.closest(".element");
-  element.remove();
-}
-
-// Сброс формы и кнопки
-function resetForm(form) {
-  form.reset();
-  const button = form.querySelector(".popup__submit-btn");
-  button.classList.add("popup__submit-btn_disabled");
-  button.setAttribute("disabled", true);
-}
-
 // 4. Стартуем
 // Добавляем карточки из стандартного массива
 initialCards.forEach( item => {
-  const newCard =  createCard(item.name, item.link);
-  insertCardIntoElementsAfter(newCard);
+  const card = new Card(item, "#card-template");
+  const workingCard = card.generateCard();
+  insertCardIntoElementsAfter(workingCard);
 });
 
-// Запускаем валидацию, код валидации в отдельном файле validation.js
-enableValidation({
+// Запускаем валидацию форм
+const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__field",
   submitButtonSelector: ".popup__submit-btn",
   inactiveButtonClass: "popup__submit-btn_disabled",
   inputErrorClass: "popup__field_type_error",
   errorClass: "popup__field-error_active",
-});
+}
+const editProfileFormValidator = new FormValidator(validationConfig, editProfileForm);
+editProfileFormValidator.enableValidation();
+
+const newPlaceFormValidator = new FormValidator(validationConfig, newPlaceForm);
+newPlaceFormValidator.enableValidation();
