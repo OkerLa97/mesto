@@ -1,43 +1,9 @@
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 
-// 1. Стандартные значения (Конфигурация)
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-// Стандартное изображение в случае если ссылка не правильная или возникла ошибка
-const imageErrorSource = "https://images.unsplash.com/photo-1525785967371-87ba44b3e6cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80";
-const imageErrorAlt = "Изображение не загрузилось";
+import { initialCards } from './constants.js';
 
 // 2. Поиск элементов по ДОМ
-
-// Темлейт карточки
-const cardTemplate = document.querySelector("#card-template").content;
-const element = cardTemplate.querySelector(".element");
 
 // Секция елементов карточек
 const elements = document.querySelector(".elements");
@@ -62,15 +28,18 @@ const addNewPlaceBtn = document.querySelector(".profile__add-button");
 
 // Попап добавления места
 const newPlacePopUp = document.querySelector("#new-place-popup");
-const newPlacePopUpCloseBtn = document.querySelector("#new-place-popup-close-button");
 
 // Форма добавления места в попапе
 const newPlaceForm = document.querySelector("#new-place-popup-form");
 const newPlaceNameInput = document.querySelector("#new-place-name-input");
 const newPlaceLinkInput = document.querySelector("#new-place-link-input");
 
-// 3. Регистрирование событий и обработка
+// Попап изображения
+const popupImage = document.querySelector("#popup-image");
+const popupImageImage = document.querySelector("#popup-image-image");
+const popupImageName = document.querySelector("#popup-image-name");
 
+// 3. Регистрирование событий и обработка
 // Клик по кнопке редактировать профайл
 profileEditButton.addEventListener("click", handleProfileEditButtonClick);
 function handleProfileEditButtonClick() {
@@ -127,19 +96,20 @@ function handleNewPlaceFormSubmit(event) {
   event.preventDefault();
   const card = new Card({name:newPlaceNameInput.value, link:newPlaceLinkInput.value}, "#card-template");
   const workingCard = card.generateCard();
-  insertCardIntoElementsBefore(workingCard);
+  insertCardIntoElementsBeforeAll(workingCard);
   closePopup(newPlacePopUp);
-  resetForm(event.target);
+  event.target.reset();
   newPlaceFormValidator.resetValidation();
 }
 
 // 3. Вспомогательные функции
-// Сброс формы и кнопки
-function resetForm(form) {
-  form.reset();
-  const button = form.querySelector(".popup__submit-btn");
-  button.classList.add("popup__submit-btn_disabled");
-  button.setAttribute("disabled", true);
+
+// Колбэк функция для открытия изображения
+function handleOpenImagePopup(name, link) {
+  popupImageImage.src = link;
+  popupImageImage.alt = name;
+  popupImageName.textContent = name;
+  openPopup(popupImage);
 }
 
 // Функции для открытия и закрытия попапов
@@ -164,21 +134,26 @@ function handleEscClose(event) {
 }
 
 // функция для вставки карточки в начало списка
-function insertCardIntoElementsBefore(card) {
+function insertCardIntoElementsBeforeAll(card) {
   elements.prepend(card);
 }
 
 // Функция для вставки карточки в конец списка
-function insertCardIntoElementsAfter(card) {
+function insertCardIntoElementsAfterAll(card) {
   elements.append(card);
+}
+
+// 4. Создание карточки
+function createCard(item) {
+  const card = new Card(item, "#card-template", handleOpenImagePopup);
+  return card.generateCard();
 }
 
 // 4. Стартуем
 // Добавляем карточки из стандартного массива
 initialCards.forEach( item => {
-  const card = new Card(item, "#card-template");
-  const workingCard = card.generateCard();
-  insertCardIntoElementsAfter(workingCard);
+  const workingCard = createCard(item);
+  insertCardIntoElementsAfterAll(workingCard);
 });
 
 // Запускаем валидацию форм
@@ -190,6 +165,7 @@ const validationConfig = {
   inputErrorClass: "popup__field_type_error",
   errorClass: "popup__field-error_active",
 }
+
 const editProfileFormValidator = new FormValidator(validationConfig, editProfileForm);
 editProfileFormValidator.enableValidation();
 
