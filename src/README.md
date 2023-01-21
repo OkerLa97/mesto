@@ -13,6 +13,8 @@ MESTO - это веб-приложение, которое позволяет п
 JavaScript был реализован модулями в стиле ООП.
 Имеется валидация форм.
 
+Проект использует Вебпак.
+
 [Ссылка на оригинальный макет в Figma](https://www.figma.com/file/bjyvbKKJN2naO0ucURl2Z0/JavaScript.-Sprint-5?node-id=0%3A1)
 
 [Ссылка на GH Pages](https://okerla97.github.io/mesto/)
