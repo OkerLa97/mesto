@@ -26,6 +26,15 @@ export const initialCards = [
   }
 ];
 
+export const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__field",
+  submitButtonSelector: ".popup__submit-btn",
+  inactiveButtonClass: "popup__submit-btn_disabled",
+  inputErrorClass: "popup__field_type_error",
+  errorClass: "popup__field-error_active",
+}
+
 export const cardsSectionSelector = '.elements';
 
 // Кнопка редактирования профайла

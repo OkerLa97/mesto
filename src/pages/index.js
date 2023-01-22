@@ -5,10 +5,14 @@ import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
 import {
     initialCards,
+    validationConfig,
+
     cardsSectionSelector,
+
     popupImageSelector,
     popupImageImageSelector,
     popupImageNameSelector,
+    
     popupCloseButtonSelector,
     popupOverlaySelector,
     profileEditButtonSelector,
@@ -66,6 +70,7 @@ addCardPopup.setEventListeners();
 
 addCardFormButton.addEventListener("click", () => {
     addCardPopup.open();
+    addCardFormValidator.resetValidation()
 });
 
 // Отправка формы добавления карточки
@@ -88,8 +93,6 @@ const cardsSection = new Section({
 // Создание попапа изображения
 //const imagePopup = new Popup(popupImageSelector, popupCloseButtonSelector, popupOverlaySelector);
 const imagePopup = new PopupWithImage(popupImageSelector, popupImageImageSelector, popupImageNameSelector, popupCloseButtonSelector, popupOverlaySelector);
-imagePopup.setEventListeners();
-
 // Открытие попапа изображения
 function handleCardClick(name, link) {
     imagePopup.open(name, link);
@@ -104,17 +107,8 @@ function createCard(item) {
 cardsSection.renderItems();
 
 // Запускаем валидацию форм
-const validationConfig = {
-    formSelector: ".popup__form",
-    inputSelector: ".popup__field",
-    submitButtonSelector: ".popup__submit-btn",
-    inactiveButtonClass: "popup__submit-btn_disabled",
-    inputErrorClass: "popup__field_type_error",
-    errorClass: "popup__field-error_active",
-  }
-  
-  const editProfileFormValidator = new FormValidator(validationConfig, editProfileForm);
-  editProfileFormValidator.enableValidation();
-  
-  const addCardFormValidator = new FormValidator(validationConfig, addCardForm);
-  addCardFormValidator.enableValidation();
+const editProfileFormValidator = new FormValidator(validationConfig, editProfileForm);
+editProfileFormValidator.enableValidation();
+
+const addCardFormValidator = new FormValidator(validationConfig, addCardForm);
+addCardFormValidator.enableValidation();
