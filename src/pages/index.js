@@ -12,10 +12,18 @@ import {
     popupImageSelector,
     popupImageImageSelector,
     popupImageNameSelector,
+
+    popupAvatarSelector,
+    editAvatarFormSelector,
+    editAvatarInputSelector,
+
+    popupDeleteCardSelector,
+    deleteCardFormSelector,
     
     popupCloseButtonSelector,
     popupOverlaySelector,
     profileEditButtonSelector,
+    profileEditAvatarButtonSelector,
     popupProfileSelector,
 
     editProfileFormSelector,
@@ -24,6 +32,7 @@ import {
 
     profileTitleSelector,
     profileTextSelector,
+    profileAvatarSelector,
 
     addCardFormButtonSelector,
     popupAddCardSelector,
@@ -35,8 +44,15 @@ import Card from '../components/Card.js';
 import Popup from '../components/Popup.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import { api } from '../components/Api.js';
 
-const userInfo = new UserInfo(profileTitleSelector, profileTextSelector);
+//Загрузка информации о пользователе с сервера
+const userInfo = new UserInfo(profileTitleSelector, profileTextSelector, profileAvatarSelector);
+api.getUserInfo()
+.then((data) => {
+    userInfo.setUserInfo(data);
+    renderCardSection();
+});
 
 // редактирования профиля
 const editProfileForm = document.querySelector(editProfileFormSelector);
@@ -54,12 +70,40 @@ profileEditButton.addEventListener("click", () => {
     profilePopup.open();
 });
 
+// Редактирование аватара
+const editAvatarForm = document.querySelector(editAvatarFormSelector);
+const editAvatarPopup = new PopupWithForm(popupAvatarSelector, editAvatarForm, handleEditAvatarFormSubmit, popupCloseButtonSelector, popupOverlaySelector);
+editAvatarPopup.setEventListeners();
+
+const profileEditAvatarButton = document.querySelector(profileEditAvatarButtonSelector);
+profileEditAvatarButton.addEventListener("click", () => {
+    editAvatarPopup.open();
+});
+
+// Отправка формы редактирования аватара
+function handleEditAvatarFormSubmit(formValues) {
+    api.editAvatar(formValues.link)
+    .then((data) => {
+        userInfo.setUserInfo(data);
+        editAvatarPopup.close();
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+}
+
 // Отправка формы редактирования профайла
 //- БЕРЁТ значения из первого и второго инпута и встовляет значения
 // в соответствующие html елементы - profile__info , profile__title,
 function handleEditProfileFormSubmit(formValues) {
-    userInfo.setUserInfo(formValues);
-    profilePopup.close();
+    api.editProfile(formValues)
+    .then((data) => {
+        userInfo.setUserInfo(data);
+        profilePopup.close();
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 }
 
 // Добавление карточки
@@ -75,36 +119,93 @@ addCardFormButton.addEventListener("click", () => {
 
 // Отправка формы добавления карточки
 function handleNewPlaceFormSubmit(formValues) {
-    const card = createCard(formValues);
-    cardsSection.prependItem(card);
-    addCardPopup.close();
+    api.addCard(formValues)
+    .then((data) => {
+        const card = createCard(data);
+        cardsSection.addItem(card);
+        addCardPopup.close();
+        renderCardSection();
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 }
 
-
-// Секция карточек
-const cardsSection = new Section({
-    items: initialCards,
-    renderer: (item) => {
-        const card = createCard(item);
-        cardsSection.addItem(card);
-    }
-}, cardsSectionSelector);
+let cardsSection = null;
+function renderCardSection() {
+    api.getInitialCards()
+    .then((items) => {
+        console.log(items);
+        cardsSection = new Section({
+            items: items,
+            renderer: (item) => {
+                const card = createCard(item);
+                cardsSection.addItem(card);
+            }
+        }, cardsSectionSelector);
+        cardsSection.renderItems();
+    });
+}
 
 // Создание попапа изображения
 //const imagePopup = new Popup(popupImageSelector, popupCloseButtonSelector, popupOverlaySelector);
 const imagePopup = new PopupWithImage(popupImageSelector, popupImageImageSelector, popupImageNameSelector, popupCloseButtonSelector, popupOverlaySelector);
+
 // Открытие попапа изображения
 function handleCardClick(name, link) {
     imagePopup.open(name, link);
 }
 
+// Удаление карточки
+const deleteCardForm = document.querySelector(deleteCardFormSelector);
+const deleteCardPopup = new PopupWithForm(popupDeleteCardSelector, deleteCardForm, handleDeleteCardFormSubmit, popupCloseButtonSelector, popupOverlaySelector);
+deleteCardPopup.setEventListeners();
+function handleDeleteCardFormSubmit() {
+    console.log(deleteCardPopup.cardId)
+    api.deleteCard(deleteCardPopup.cardId)
+    .then(() => {
+        renderCardSection();
+        deleteCardPopup.close();
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+}
+
 // Создание карточки
 function createCard(item) {
-    const card = new Card(item, "#card-template", handleCardClick);
+    const card = new Card(item, "#card-template", handleCardClick, handleDeleteClick, handleLikeClick, userInfo._id);
     return card.generateCard();
 }
 
-cardsSection.renderItems();
+// Удаление карточки
+function handleDeleteClick(cardId) {
+    deleteCardPopup.open();
+    deleteCardPopup.cardId = cardId;
+}
+
+// Лайк карточки
+function handleLikeClick(card) {
+    if (card.isLiked()) {
+        api.deleteLike(card._id)
+        .then((data) => {
+            card.setLikesInfo(data.likes);
+            card.toggleLikeButton();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    } else {
+        api.addLike(card._id)
+        .then((data) => {
+            card.setLikesInfo(data.likes);
+            card.toggleLikeButton();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+}
 
 // Запускаем валидацию форм
 const editProfileFormValidator = new FormValidator(validationConfig, editProfileForm);
@@ -112,3 +213,6 @@ editProfileFormValidator.enableValidation();
 
 const addCardFormValidator = new FormValidator(validationConfig, addCardForm);
 addCardFormValidator.enableValidation();
+
+const editAvatarFormValidator = new FormValidator(validationConfig, editAvatarForm);
+editAvatarFormValidator.enableValidation();
