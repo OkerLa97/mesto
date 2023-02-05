@@ -52,6 +52,9 @@ api.getUserInfo()
 .then((data) => {
     userInfo.setUserInfo(data);
     renderCardSection();
+})
+.catch((err) => {
+    console.log(err);
 });
 
 // редактирования профиля
@@ -78,6 +81,7 @@ editAvatarPopup.setEventListeners();
 const profileEditAvatarButton = document.querySelector(profileEditAvatarButtonSelector);
 profileEditAvatarButton.addEventListener("click", () => {
     editAvatarPopup.open();
+    editAvatarFormValidator.resetValidation();
 });
 
 // Отправка формы редактирования аватара
@@ -89,6 +93,9 @@ function handleEditAvatarFormSubmit(formValues) {
     })
     .catch((err) => {
         console.log(err);
+    })
+    .finally(() => {
+        editAvatarPopup.loading(false);
     });
 }
 
@@ -103,6 +110,9 @@ function handleEditProfileFormSubmit(formValues) {
     })
     .catch((err) => {
         console.log(err);
+    })
+    .finally(() => {
+        profilePopup.loading(false);
     });
 }
 
@@ -122,12 +132,14 @@ function handleNewPlaceFormSubmit(formValues) {
     api.addCard(formValues)
     .then((data) => {
         const card = createCard(data);
-        cardsSection.addItem(card);
+        cardsSection.prependItem(card);
         addCardPopup.close();
-        renderCardSection();
     })
     .catch((err) => {
         console.log(err);
+    })
+    .finally(() => {
+        addCardPopup.loading(false);
     });
 }
 
@@ -135,7 +147,6 @@ let cardsSection = null;
 function renderCardSection() {
     api.getInitialCards()
     .then((items) => {
-        console.log(items);
         cardsSection = new Section({
             items: items,
             renderer: (item) => {
@@ -144,6 +155,9 @@ function renderCardSection() {
             }
         }, cardsSectionSelector);
         cardsSection.renderItems();
+    })
+    .catch((err) => {
+        console.log(err);
     });
 }
 
@@ -161,14 +175,16 @@ const deleteCardForm = document.querySelector(deleteCardFormSelector);
 const deleteCardPopup = new PopupWithForm(popupDeleteCardSelector, deleteCardForm, handleDeleteCardFormSubmit, popupCloseButtonSelector, popupOverlaySelector);
 deleteCardPopup.setEventListeners();
 function handleDeleteCardFormSubmit() {
-    console.log(deleteCardPopup.cardId)
-    api.deleteCard(deleteCardPopup.cardId)
+    api.deleteCard(deleteCardPopup.card._id)
     .then(() => {
-        renderCardSection();
+        deleteCardPopup.card.deleteCard();
         deleteCardPopup.close();
     })
     .catch((err) => {
         console.log(err);
+    })
+    .finally(() => {
+        deleteCardPopup.loading(false);
     });
 }
 
@@ -179,9 +195,9 @@ function createCard(item) {
 }
 
 // Удаление карточки
-function handleDeleteClick(cardId) {
+function handleDeleteClick(card) {
     deleteCardPopup.open();
-    deleteCardPopup.cardId = cardId;
+    deleteCardPopup.card = card;
 }
 
 // Лайк карточки

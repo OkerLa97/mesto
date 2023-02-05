@@ -42,7 +42,7 @@ export default class Card {
     });
 
     this._elementDeleteButton.addEventListener("click", () => {
-      this._handleDeleteClick(this._id);
+      this._handleDeleteClick(this);
     });
 
     this._elementImageContainer.addEventListener("click", () => {
@@ -93,6 +93,12 @@ export default class Card {
     this._elementLikeCounter.textContent = this._likes.length;
 
     return this._element;
+  }
+
+  // Функция удаления карточки
+  deleteCard() {
+    this._element.remove();
+    this._element = null;
   }
 
   // Функция обновления количества лайков
